@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Guide - Debian Wiki</title>
+    <style>
+        /* === Debian Identity Variables === */
+        :root {
+            --debian-red: #d70a53;
+            --debian-bg: #ffffff;
+            --debian-text: #2e3440; 
+            --debian-link: #0055bb;
+            --debian-border: #cccccc;
+            
+            /* Terminal Colors (Nord-inspired) */
+            --term-bg: #2e3440;
+            --term-text: #d8dee9;
+            --term-prompt: #88c0d0; 
+            --term-cmd: #a3be8c;    
+        }
+
+        /* === Base Styles === */
+        body {
+            font-family: "Liberation Sans", Arial, Helvetica, sans-serif;
+            background-color: var(--debian-bg);
+            color: var(--debian-text);
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* === Top Banner === */
+        .wiki-portal-banner {
+            background-color: var(--debian-red);
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .wiki-portal-banner h1 {
+            color: white;
+            font-size: 24px;
+            margin: 0;
+            font-weight: normal;
+        }
+
+        /* === Navigation === */
+        nav.breadcrumbs {
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--debian-border);
+            padding-bottom: 10px;
+        }
+
+        a {
+            color: var(--debian-link);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* === Typography & Structure === */
+        h1.page-title {
+            font-size: 2.2em;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            border-bottom: 1px solid var(--debian-border);
+            padding-bottom: 5px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+            color: #3b4252;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .notice {
+            background: #fff9fb;
+            border: 1px solid #f9d7e1;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .tip {
+            background: #f0f8ff;
+            border: 1px solid #cce0ff;
+            padding: 10px 15px;
+            margin: 15px 0;
+        }
+
+        /* === Terminal Design === */
+        .terminal-window {
+            background-color: var(--term-bg);
+            color: var(--term-text);
+            font-family: "DejaVu Sans Mono", "Courier New", monospace;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 0.95em;
+            overflow-x: auto;
+        }
+
+        .prompt {
+            color: var(--term-prompt);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .command {
+            color: var(--term-cmd);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid var(--debian-border);
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px 0;
+            border-top: 1px solid var(--debian-border);
+            font-size: 0.85em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wiki-portal-banner">
+        <h1>debian wiki</h1>
+    </div>
+
+    <div class="main-container">
+        <nav class="breadcrumbs">
+            <a href="#">Debian Wiki</a> / <a href="#">User Portal</a> / Terminal Guide
+        </nav>
+
+        <h1 class="page-title">Terminal Guide</h1>
+        <p><em>Basic commands for new Linux users (Applicable to Debian-based distributions like Ubuntu, Linux Mint, Pop!_OS...)</em></p>
+
+        <h2>Introduction</h2>
+        <p>Welcome to the world of the terminal. In this guide, you will learn the fundamental commands to navigate Linux smoothly from the command line. Mastering the terminal is not mandatory for daily use: distributions like Ubuntu or KDE Plasma offer very comprehensive graphical environments with software stores, update managers, and visual tools. However, the terminal offers a power, speed, and flexibility that no graphical interface can match. Once you get used to it, you will discover that many tasks can be resolved in seconds with a single command.</p>
+        
+        <div class="tip">
+            💡 <strong>Tip:</strong> Do not memorize all the commands at once. Practice a little bit at a time, a couple of commands a day, and in a few weeks, they will become natural to you.
+        </div>
+
+        <h2>1. System Management with APT</h2>
+        <p>APT (Advanced Package Tool) is the package manager for Debian and its variants. With it, you can update the system, install and uninstall software, and much more. You will almost always need to prepend sudo to execute these commands with administrator privileges.</p>
+
+        <h3>1.1 Update the system</h3>
+        <p>Updating the system is an important habit to maintain security and stability. The process is done in two steps:</p>
+        <p><strong>Step 1:</strong> Update the list of available packages.</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">sudo apt update</span>
+        </div>
+        <p>This command does not download or install anything yet; it simply queries the repositories to find out which packages have new versions available.</p>
+        
+        <p><strong>Step 2:</strong> Download and install the updates.</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">sudo apt upgrade</span>
+        </div>
+        
+        <div class="notice">
+            ⚠ <strong>Note:</strong> If you run sudo apt upgrade before sudo apt update, the system will not find anything new to install, because the package list will be outdated. Always run the update first.
+        </div>
+        <div class="tip">
+            💡 <strong>Tip:</strong> You can combine both commands into a single line: sudo apt update && sudo apt upgrade
+        </div>
+
+        <h3>1.2 Install software</h3>
+        <p>To install a program available in the official Debian repositories:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">sudo apt install [package_name]</span>
+        </div>
+        <p>For example, to install Python:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">sudo apt install python3</span>
+        </div>
+        <div class="notice">
+            ⚠ <strong>Note:</strong> Packages installed with apt come from the official Debian repositories. They are safe and verified, but they may not always have the latest version of certain software.
+        </div>
+
+        <h3>1.3 Uninstall software</h3>
+        <p>To remove a program you no longer need:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">sudo apt remove [package_name]</span>
+        </div>
+        <p>If you also want to remove the configuration files left by the program:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">sudo apt purge [package_name]</span>
+        </div>
+
+        <h3>1.4 Clean up unnecessary packages</h3>
+        <p>Over time, the system accumulates packages that are no longer needed. To free up space:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">sudo apt autoremove</span>
+        </div>
+        <div class="tip">
+            💡 <strong>Tip:</strong> It is a good practice to run sudo apt autoremove after uninstalling programs to keep the system clean.
+        </div>
+
+        <h3>1.5 Search for packages</h3>
+        <p>If you don't remember the exact name of a package, you can search for it:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">apt search [search_term]</span>
+        </div>
+        <p>Example:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">apt search video editor</span>
+        </div>
+
+        <h2>2. File System Navigation</h2>
+        <p>In Linux, everything is a file, and the file system is organized in a directory structure that starts from the root, represented by /. Knowing how to navigate this structure is fundamental.</p>
+
+        <h3>2.1 Where am I? — pwd</h3>
+        <p>The pwd (Print Working Directory) command shows the full path of the directory you are currently in:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">pwd</span><br>
+            /home/user/Documents
+        </div>
+
+        <h3>2.2 View folder contents — ls</h3>
+        <p>The ls command lists the files and folders in the current directory:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">ls</span>
+        </div>
+        <p>With more useful options:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">ls -la</span>
+        </div>
+        <ul>
+            <li><code>-l</code>: shows the list in detailed format (permissions, size, date).</li>
+            <li><code>-a</code>: also shows hidden files (those starting with a dot).</li>
+        </ul>
+
+        <h3>2.3 Move between folders — cd</h3>
+        <p>The cd (Change Directory) command allows you to navigate between directories:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">cd [directory_path]</span>
+        </div>
+        <p>Practical examples:</p>
+        
+        <table>
+            <tr>
+                <th>Command</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>cd Documents</code></td>
+                <td>Enters the Documents folder (within the current directory)</td>
+            </tr>
+            <tr>
+                <td><code>cd /home/user</code></td>
+                <td>Goes directly to that absolute path</td>
+            </tr>
+            <tr>
+                <td><code>cd ..</code></td>
+                <td>Moves up one level (to the parent directory)</td>
+            </tr>
+            <tr>
+                <td><code>cd ~</code></td>
+                <td>Goes to the current user's home directory</td>
+            </tr>
+            <tr>
+                <td><code>cd -</code></td>
+                <td>Returns to the previous directory you were in</td>
+            </tr>
+        </table>
+
+        <h3>2.4 Create folders — mkdir</h3>
+        <p>To create a new folder:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">mkdir [folder_name]</span>
+        </div>
+        <p>To create multiple nested folders at once:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">mkdir -p projects/web/css</span>
+        </div>
+
+        <h3>2.5 Create files — touch</h3>
+        <p>The touch command creates an empty file or updates the modification date of an existing one:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">touch file.txt</span>
+        </div>
+
+        <h3>2.6 Copy, move, and delete</h3>
+        <p>These three commands are essential for handling files and folders:</p>
+        
+        <table>
+            <tr>
+                <th>Command</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>cp file.txt copy.txt</code></td>
+                <td>Copies a file</td>
+            </tr>
+            <tr>
+                <td><code>cp -r folder/ new_folder/</code></td>
+                <td>Copies an entire folder (-r = recursive)</td>
+            </tr>
+            <tr>
+                <td><code>mv file.txt /another/path/</code></td>
+                <td>Moves a file to another location</td>
+            </tr>
+            <tr>
+                <td><code>mv old.txt new.txt</code></td>
+                <td>Renames a file</td>
+            </tr>
+            <tr>
+                <td><code>rm file.txt</code></td>
+                <td>Deletes a file</td>
+            </tr>
+            <tr>
+                <td><code>rm -r folder/</code></td>
+                <td>Deletes a folder and all its contents</td>
+            </tr>
+        </table>
+        
+        <div class="notice">
+            ⚠ <strong>Note:</strong> The rm command does not send files to the trash: it deletes them permanently. Use it with caution, especially with the -r option.
+        </div>
+
+        <h2>3. View File Contents</h2>
+        <p>Many times you will need to read the contents of text files directly from the terminal, without opening a graphical editor.</p>
+
+        <h3>3.1 View all contents — cat</h3>
+        <p>The cat command displays the entire contents of a file:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">cat file.txt</span>
+        </div>
+        <div class="tip">
+            💡 <strong>Tip:</strong> cat is ideal for short files. For long files, it is better to use less.
+        </div>
+
+        <h3>3.2 Read long files — less</h3>
+        <p>The less command allows you to comfortably read long files by paginating the content:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">less file.txt</span>
+        </div>
+        <p>Inside less, you can use the arrow keys to scroll, the spacebar to move forward one page, and the q key to exit.</p>
+
+        <h3>3.3 View the first or last lines — head and tail</h3>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">head -n 20 file.txt</span>   # Shows the first 20 lines<br>
+            <span class="prompt">user@debian:~$</span> <span class="command">tail -n 20 file.txt</span>   # Shows the last 20 lines
+        </div>
+        <div class="tip">
+            💡 <strong>Tip:</strong> tail -f file.log is very useful for monitoring a log file in real-time as it is continuously written to.
+        </div>
+
+        <h2>4. Permissions and Users</h2>
+        <p>Linux is a multi-user system with a robust permissions system. Understanding the basics will help you avoid errors and keep your system secure.</p>
+
+        <h3>4.1 Who am I? — whoami</h3>
+        <p>To find out which user you are currently working as:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">whoami</span>
+        </div>
+
+        <h3>4.2 Run as administrator — sudo</h3>
+        <p>sudo (Super User DO) allows you to execute commands with administrator privileges without having to log in as root. Most system administration commands require it:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">sudo [command]</span>
+        </div>
+        <div class="notice">
+            ⚠ <strong>Note:</strong> Use it responsibly. A command executed with sudo has the power to modify any part of the system, including critical files.
+        </div>
+
+        <h3>4.3 Change file permissions — chmod</h3>
+        <p>Every file in Linux has read (r), write (w), and execute (x) permissions for the owner, the group, and other users. The chmod command modifies these permissions:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">chmod +x script.sh</span>      # Grant execute permission<br>
+            <span class="prompt">user@debian:~$</span> <span class="command">chmod 755 script.sh</span>     # Numeric format: owner=7, group=5, others=5
+        </div>
+
+        <h2>5. Process Management</h2>
+        <p>Sometimes a program freezes or consumes too many resources. The terminal gives you tools to monitor and control running processes.</p>
+
+        <h3>5.1 View running processes — top and htop</h3>
+        <p>The top command shows active processes and their CPU and memory usage in real-time:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">top</span>
+        </div>
+        <div class="tip">
+            💡 <strong>Tip:</strong> htop is a more visual and interactive version of top. If it is not installed, you can install it with: sudo apt install htop
+        </div>
+
+        <h3>5.2 List processes — ps</h3>
+        <p>To see a list of the system's active processes:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">ps aux</span>
+        </div>
+
+        <h3>5.3 Terminate a process — kill</h3>
+        <p>If you need to close an unresponsive process, first find its identifier (PID) using ps aux or top, and then use kill:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">kill [PID]</span>
+        </div>
+        <p>If the process does not respond to kill, you can force it to close:</p>
+        <div class="terminal-window">
+            <span class="prompt">user@debian:~$</span> <span class="command">kill -9 [PID]</span>
+        </div>
+
+        <h2>6. Basic Network Commands</h2>
+        <p>These commands will help you diagnose connection problems and obtain information about your network.</p>
+        
+        <table>
+            <tr>
+                <th>Command</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td><code>ping google.com</code></td>
+                <td>Checks for connection with a server</td>
+            </tr>
+            <tr>
+                <td><code>ip a</code></td>
+                <td>Shows network interfaces and their IP addresses</td>
+            </tr>
+            <tr>
+                <td><code>curl https://example.com</code></td>
+                <td>Downloads the content of a URL</td>
+            </tr>
+            <tr>
+                <td><code>wget https://file.zip</code></td>
+                <td>Downloads a file from the internet</td>
+            </tr>
+            <tr>
+                <td><code>ssh user@ip</code></td>
+                <td>Connects to another machine via SSH</td>
+            </tr>
+        </table>
+
+        <footer>
+            <p>Draft proposal for Debian documentation.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
